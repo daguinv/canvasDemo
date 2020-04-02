@@ -1,0 +1,168 @@
+@borderColor : rgba(68, 58, 58, 0.808); 
+@backColor:rgb(255, 162, 201); 
+@fontColor:#fff;
+*{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+body{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+.wrapper{
+    height: 100vh;
+    position: relative;
+    // background-color:@backColor;
+    overflow: hidden;
+    .imageWrapper{
+        overflow: hidden;
+        // border: 1px solid;
+        padding-top: 70%;
+        position: relative;
+        margin-top: 25%;
+        .imageBox{
+            width: 70%;
+            padding-top: 70%;
+            margin: 0 auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            // border: 1px solid red;
+            border-radius: 50%;
+            background: @borderColor;
+            img{
+                width: 94%;
+                height: 94%;
+                position: absolute;
+                left: 0;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                border-radius: 50%;
+            }
+        }
+    }
+    
+    .text{
+        text-align: center;
+        // border: 1px solid;
+        color: @fontColor;
+        line-height: 36px;
+        margin: 40px 0px;
+        .songName{
+            font-size: 24px;
+        }
+    }
+    .process{
+        display: flex;
+        .curTime,.allTime{
+            width: 80px;
+            height: 40px;
+            // border: 1px solid;
+            text-align: center;
+            color:@fontColor;
+            line-height: 40px;
+        }
+        .center{
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            // border: 1px solid red;
+            .pro-bottom,.pro-top{
+                
+                height: 3px;
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+            }
+            .pro-bottom{
+                width: 100%;
+                background: rgba(146, 134, 134, 0.708);
+                // border: 1px solid red;
+            }
+            .pro-top{
+                width: calc(100% - 15px);      
+                background: #fff;
+                transform: translateX(-100%);
+                .spot{
+                    position: absolute;
+                    // right: -20px;
+                    width: 15px;
+                    height: 15px;
+                    border-radius: 50%;
+                    background-color: rgba(255, 255, 255, 0.708);
+                    top: 0;
+                    bottom: 0;
+                    right: -15px;
+                    margin: auto;
+                }
+            }
+        }
+    }
+
+    .bottom{
+        height: 50px;
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        // border: 1px solid;
+        display: flex;
+       div.btn{
+            flex: auto;
+            height: 100%;
+            // border: 1px solid;
+            background-repeat: no-repeat !important;
+            background-size: 20px  !important;
+            background-position: center !important;
+        }
+        .love{
+            background: url(../image/icon-like.png);
+            &.loving{
+                background: url(../image/icon-like-solid.png)
+            }
+        }
+        .pre{
+            background: url(../image/icon-prev.png);
+        }
+        .play{
+            background: url(../image/icon-play.png);
+            &.playing{
+                background: url(../image/icon-pause.png);
+            }
+        }
+        .next{
+            background: url(../image/icon-next.png);
+        }
+        .list{
+            background: url(../image/icon-list.png)
+        } 
+        
+    }
+    .listWrapper{
+        width: 100%;
+        height: 70%;
+        border: 1px solid;
+        position: absolute;
+        bottom: -100%;
+        background-color: rgb(48, 48, 73);
+        .close{
+            width: 100%;
+            line-height: 55px;
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+            color: #fff;
+            border-top: 1px solid rgb(111, 111, 139);
+        }
+        .item{
+            line-height: 50px;
+            color: #fff;
+            padding-left: 30px;
+        }
+    }
+}

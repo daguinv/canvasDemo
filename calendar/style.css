@@ -1,0 +1,40 @@
+.wrapper{
+    margin: 100px auto;
+    width: 500px;
+    animation: col 6s infinite;
+    color: #fff;
+    border-radius: 5px;
+    padding: 1em;
+    background: #abcdef
+}
+@keyframes col{
+    0%{background-color: #abcdef}
+    20%{background-color: pink}
+    40%{background-color: yellow}
+    60%{background-color: orange}
+    80%{background: palegreen}
+    100%{background-color: #abcdef}
+}
+.control-show{
+    text-align: center;
+}
+.week-show,.days-show{
+    display: grid;
+    grid-template-columns: repeat(7,1fr);
+    place-items:center;
+    margin: 1.2em 0;
+}
+.days-show{
+    row-gap: 10px;
+}
+.days-show span{
+    display: inline-block;
+    width: 30px;
+    line-height: 30px;
+    text-align: center;
+    border-radius: 50%;
+}
+.days-show span.active{
+    background: #fff;
+    color: #abcdef;
+}

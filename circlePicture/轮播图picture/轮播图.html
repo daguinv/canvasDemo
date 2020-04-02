@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 480px;
+            height: 302px;
+            margin: 150px auto;
+            /* border: 3px solid red;*/
+            overflow: hidden;
+        }
+
+        .pic {
+            position: absolute;
+        }
+
+        .picture1 {
+            left: -960px;
+        }
+
+        .picture2 {
+            left: -480px;
+        }
+
+        .picture3 {
+            left: 0px;
+        }
+
+        .picture4 {
+            left: 480px;
+        }
+
+        .picture5 {
+            left: 960px;
+        }
+
+        .btn {
+            position: absolute;
+            top: 500px;
+            left: 50%;
+            margin-left: -80px;
+        }
+
+        .btn button {
+            color: brown;
+            background-color: burlywood;
+            display: inline-block;
+            margin-right: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="box">
+            <img class="pic picture1" src="images/1.png" alt="">
+            <img class="pic picture2" src="images/2.png" alt="">
+            <img class="pic picture3" src="images/3.png" alt="">
+            <img class="pic picture4" src="images/4.png" alt="">
+            <img class="pic picture5" src="images/5.png" alt="">
+        </div>
+    </div>
+    <div class="btn">
+        <button class="shang">上一张</button>
+        <button class="xia">下一张</button>
+    </div>
+    <script>
+        var shang = document.getElementsByTagName('button')[0];
+        var xia = document.getElementsByTagName('button')[1];
+        var img = document.getElementsByTagName('img');
+        imgLength = img.length;
+        var timer = 0;
+        automatic();
+        var intervaltimer ;
+        shang.addEventListener('mousedown', function () {
+            clearInterval(timer);
+            if (img[0].offsetLeft == 0) {
+                for (var i = 0; i < imgLength; i++) {
+                    img[i].style.left = img[i].offsetLeft - 1920 + "px";
+                }
+            }
+            else {
+                for (var i = 0; i < imgLength; i++) {
+                    img[i].style.left = img[i].offsetLeft + 480 + "px";
+                }
+            }
+        }, false);
+        xia.addEventListener('mousedown', function () {
+            clearInterval(timer);
+            if (img[4].offsetLeft == 0) {
+                for (var i = 0; i < imgLength; i++) {
+                    img[i].style.left = img[i].offsetLeft + 1920 + "px";
+                }
+            }
+            else {
+                for (var i = 0; i < imgLength; i++) {
+                    img[i].style.left = img[i].offsetLeft - 480 + "px";
+                }
+            }
+        }, false);
+        shang.addEventListener('mouseup', function () {
+            automatic();
+        })
+        xia.addEventListener('mouseup', function () {
+            automatic();
+        })
+
+        function automatic(){
+            timer = setInterval(function(){
+            if (img[4].offsetLeft == 0) {
+                for (var i = 0; i < imgLength; i++) {
+                    img[i].style.left = img[i].offsetLeft + 1920 + "px";
+                }
+            }
+            else {
+                for (var i = 0; i < imgLength; i++) {
+                    img[i].style.left = img[i].offsetLeft - 480 + "px";
+                }
+            }
+        },3000);
+
+        }
+        
+    </script>
+</body>
+
+</html>

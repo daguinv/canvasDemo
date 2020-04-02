@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        .wrapper-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -250px;
+            margin-left: -250px;
+        }
+
+        .wrapper {
+            width: 500px;
+            height: 500px;
+            background-color: #000;
+        }
+
+        .value {
+            position: absolute;
+            display: block;
+            background-color: #fff;
+            width: 10px;
+            height: 10px;
+            /* border-radius: 50%; */
+        }
+
+        .first::after {
+            position: absolute;
+            content: "";
+            width: 10px;
+            height: 10px;
+            background-color: blue;
+            border-radius: 50%;
+            transform: scale(0.2);
+        }
+
+        span {
+            position: absolute;
+            display: block;
+            background-color: #fff;
+            width: 10px;
+            height: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper-box">
+        <div class="wrapper">
+            <div class="shen">
+                <span class="value"></span>
+                <span class="value"></span>
+                <span class="value"></span>
+                <span class="first value"></span>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        var span = document.getElementsByClassName('value');
+        var wrapperBox = document.getElementsByTagName('div')[0];
+        var shen = document.getElementsByClassName('shen')[0];
+        var shang = 0, xia = 0, zuo = 0, you = 0;
+        var key = 0;
+        var foodX, foodY;
+        var x, y;
+        var count = 0;
+        //创建初始蛇身
+        var snakeLength = 4;
+        for (var i = 0; i < snakeLength; i++) {
+            span[i].style.bottom = 30 + i * 10 + "px";
+            span[i].style.left = 240 + "px";
+        }
+        //创建食物
+        creatfood();
+        var keydownValue = 0;
+        // up ();
+        document.onkeydown = function (e) {
+
+            clearInterval(shang);
+            clearInterval(xia);
+            clearInterval(zuo);
+            clearInterval(you);
+            if (e.keyCode == 38 && keydownValue != 40) { //上
+                key = 0;
+                if (keydownValue == 37) {
+                    rotLeftTop()
+                }
+                else if (keydownValue == 39) {
+                    rotRightTop()
+                }
+                else {
+                    up(e.keyCode);
+                }
+                keydownValue = 38;
+            }
+            if (e.keyCode == 40 && keydownValue != 38) { //下
+                key = 0;
+                if (keydownValue == 37) {
+                    rotLeftDown();
+                }
+                else if (keydownValue == 39) {
+                    rotRightDown();
+                }
+                else {
+                    down(e.keyCode);
+                }
+                keydownValue = 40;
+
+            }
+            if (e.keyCode == 37 && keydownValue != 39) { //左
+                key = 0;
+                console.log(keydownValue);
+                if (keydownValue == 40) {
+                    rotDownLeft()
+                }
+                else if (keydownValue == 38) {
+                    rotTopLeft();
+                }
+                else {
+                    lef(e.keyCode);
+                }
+
+                keydownValue = 37;
+            }
+            if (e.keyCode == 39 && keydownValue != 37) { //右
+                key = 0;
+                if (keydownValue == 40) {
+                    rotDownRight()
+                }
+                else if (keydownValue == 38) {
+                    rotTopRight();
+                }
+                else {
+                    righ(e.keyCode);
+                }
+                keydownValue = 39;
+            }
+        }
+
+        function creatfood() {
+            x = wrapperBox.offsetLeft; //到可视区左侧的距离
+            y = wrapperBox.offsetTop;  //到可视区上侧的距离
+            //console.log(x,y);
+            var creatShu = Math.floor(Math.random() * 50);
+            var xx = creatShu * 10 + x;
+            var yy = creatShu * 10 + y;
+            //var xx = parseInt(Math.random() * 490 + x);
+            //var yy = parseInt(Math.random() * 490 + y);
+
+            var food = document.createElement('span');
+            document.body.appendChild(food);
+            food.setAttribute("class", "food");
+
+            foodX = food.style.top = yy + "px";
+            foodY = food.style.left = xx + "px";
+            fY = parseInt(foodY);
+            fX = parseInt(foodX);
+            console.log(fY, fX);
+            /*console.log(foodX,foodY);*/
+            /*noFirstLeft = span[0].offsetLeft;
+            noFirstTop = span[0].offsetTop;
+            console.log(noFirstLeft,noFirstTop);
+            var length = span.length;
+            noLastLeft = span[length].offsetLeft;
+            noLastTop = span[length].offsetTop;
+            console.log(noLastLeft,noLastTop);*/
+            /*console.log(x,y);
+            console.log(w,h);
+            console.log(xx,yy);*/
+
+        }
+        function rotLeftTop() {
+            var sum = 1;
+            var b = snakeLength - 2;
+            var i, j, k;
+            for (i = snakeLength - 1; i >= 1; i--) {
+                var add = snakeLength - 1;
+                for (j = 0; j < sum; j++) {
+                    span[add].style.bottom = parseInt(span[add].style.bottom) + 10 + "px";
+                    add--;
+                }
+                if (sum < snakeLength - 1) {
+                    sum++;
+                }
+                for (k = b; k >= 0; k--) {
+                    span[k].style.left = parseInt(span[k].style.left) - 10 + "px";
+                }
+                b--;
+            }
+            up();
+        }
+        function rotRightTop() {
+            var sum = 1;
+            var b = snakeLength - 2;
+            var i, j, k;
+            for (i = snakeLength - 1; i >= 1; i--) {
+                var add = snakeLength - 1;
+                for (j = 0; j < sum; j++) {
+                    span[add].style.bottom = parseInt(span[add].style.bottom) + 10 + "px";
+                    add--;
+                }
+                if (sum < snakeLength - 1) {
+                    sum++;
+                }
+                for (k = b; k >= 0; k--) {
+                    span[k].style.left = parseInt(span[k].style.left) + 10 + "px";
+                }
+                b--;
+            }
+            up();
+        }
+        function up() {
+            if (key == 0) {
+
+                var first = 1;
+                keydownValue = 38;
+                //console.log(keydownValue);
+                shang = setInterval(function () {
+                    key = 1;
+                    var count = 0;
+                    var kkk = 4;
+                    for (var i = 0; i < snakeLength; i++) {
+                        //console.log(parseInt(span[i].style.bottom) + 10 + "px");
+                        span[i].style.bottom = parseInt(span[i].style.bottom) + 10 + "px";
+                        //s[kkk].style.bottom = s[kkk].offsetTop + y - 10 + "px";
+                        // k++; 
+                        eatFood();
+                    }s;
+
+                }, 400)
+            }
+        }
+
+        function rotLeftDown() {
+            if (key == 0) {
+                var sum = 1;
+                var b = snakeLength - 2;
+                var i, j, k;
+                for (i = snakeLength - 1; i >= 1; i--) {
+                    var add = snakeLength - 1;
+                    for (j = 0; j < sum; j++) {
+                        span[add].style.bottom = parseInt(span[add].style.bottom) - 10 + "px";
+                        add--;
+                    }
+                    if (sum < snakeLength - 1) {
+                        sum++;
+                    }
+                    for (k = b; k >= 0; k--) {
+                        span[k].style.left = parseInt(span[k].style.left) - 10 + "px";
+                    }
+                    b--;
+                }
+                down();
+            }
+        }
+        function rotRightDown() {
+            if (key == 0) {
+                var sum = 1;
+                var b = snakeLength - 2;
+                var i, j, k;
+                for (i = snakeLength - 1; i >= 1; i--) {
+                    var add = snakeLength - 1;
+                    for (j = 0; j < sum; j++) {
+                        span[add].style.bottom = parseInt(span[add].style.bottom) - 10 + "px";
+                        add--;
+                    }
+                    if (sum < snakeLength - 1) {
+                        sum++;
+                    }
+                    for (k = b; k >= 0; k--) {
+                        span[k].style.left = parseInt(span[k].style.left) + 10 + "px";
+                    }
+                    b--;
+                }
+                down();
+            }
+        }
+        function down() {
+
+            xia = setInterval(function () {
+                key = 1;
+                var first = 1;
+                var count = 0;
+                for (var i = snakeLength - 1; i >= 0; i--) {
+
+                    // console.log(parseInt(span[i].style.bottom) - 10 + "px");
+                    span[i].style.bottom = parseInt(span[i].style.bottom) - 10 + "px";
+                    eatFood();
+                }
+            }, 400)
+        }
+        function rotDownLeft() {
+            if (key == 0) {
+                var sum = 1;
+                var b = snakeLength - 2;
+                var i, j, k;
+                for (i = snakeLength - 1; i >= 1; i--) {
+                    var add = snakeLength - 1;
+                    for (j = 0; j < sum; j++) {
+                        span[add].style.left = parseInt(span[add].style.left) - 10 + "px";
+                        add--;
+                    }
+                    if (sum < snakeLength - 1) {
+                        sum++;
+                    }
+                    for (k = b; k >= 0; k--) {
+                        span[k].style.bottom = parseInt(span[k].style.bottom) - 10 + "px";
+                    }
+                    b--;
+                }
+                lef();
+            }
+        }
+        function rotTopLeft() {
+            if (key == 0) {
+                var sum = 1;
+                var b = snakeLength - 2;
+                var i, j, k;
+                for (i = snakeLength - 1; i >= 1; i--) {
+                    var add = snakeLength - 1;
+                    for (j = 0; j < sum; j++) {
+                        span[add].style.left = parseInt(span[add].style.left) - 10 + "px";
+                        add--;
+                    }
+                    if (sum < snakeLength - 1) {
+                        sum++;
+                    }
+                    for (k = b; k >= 0; k--) {
+                        span[k].style.bottom = parseInt(span[k].style.bottom) + 10 + "px";
+                    }
+                    b--;
+                }
+                lef();
+            }
+        }
+        function lef() {
+
+            zuo = setInterval(function () {
+                k = 1;
+                var count = 0;
+                for (var i = snakeLength - 1; i >= 0; i--) {
+                    span[i].style.left = parseInt(span[i].style.left) - 10 + "px";
+                    eatFood();
+                }
+            }, 400);
+        }
+        function rotDownRight() {
+            if (key == 0) {
+                var sum = 1;
+                var b = snakeLength - 2;
+                var i, j, k;
+                for (i = snakeLength - 1; i >= 1; i--) {
+                    var add = snakeLength - 1;
+                    for (j = 0; j < sum; j++) {
+                        span[add].style.left = parseInt(span[add].style.left) + 10 + "px";
+                        add--;
+                    }
+                    if (sum < snakeLength - 1) {
+                        sum++;
+                    }
+                    for (k = b; k >= 0; k--) {
+                        span[k].style.bottom = parseInt(span[k].style.bottom) - 10 + "px";
+                    }
+                    b--;
+                }
+                righ();
+            }
+        }
+        function rotTopRight() {
+            if (key == 0) {
+                var sum = 1;
+                var b = snakeLength - 2;
+                var i, j, k;
+                for (i = snakeLength - 1; i >= 1; i--) {
+                    var add = snakeLength - 1;
+                    for (j = 0; j < sum; j++) {
+                        span[add].style.left = parseInt(span[add].style.left) + 10 + "px";
+                        add--;
+                    }
+                    if (sum < snakeLength - 1) {
+                        sum++;
+                    }
+                    for (k = b; k >= 0; k--) {
+                        span[k].style.bottom = parseInt(span[k].style.bottom) + 10 + "px";
+                    }
+                    b--;
+                }
+                righ();
+            }
+        }
+        function righ() {
+            you = setInterval(function () {
+                k = 1;
+                var count = 0;
+                for (var i = snakeLength - 1; i >= 0; i--) {
+                    span[i].style.left = parseInt(span[i].style.left) + 10 + "px";
+                    eatFood();
+                }
+            }, 400);
+        }
+
+        function eatFood() { //x是左，y是上  fX上，fY是左
+            //console.log(foodX,foodY);
+            //console.log(span[3].offsetLeft,span[3].offsetTop);
+            // console.log(count);
+            var snakeHeadL = span[3].offsetLeft;
+            var snakeHeadT = span[3].offsetTop;
+            console.log(snakeHeadL + x, snakeHeadT + y);
+            fY = parseInt(foodY);
+            fX = parseInt(foodX);
+            //console.log(fY,fX)
+            if (snakeHeadL + x == fY && snakeHeadT + y == fX) {
+                if (count == 0) {
+                    console.log("yes");
+                    console.log(keydownValue);
+                    if (keydownValue == 38) {
+                        span = document.createElement('span');
+                        shen.appendChild(span);
+                        snakeLength++;
+                       // span.style.left = span[3].offsetLeft + x + "px";
+                        //span.style.top = span[3].offsetTop + y - 10 + "px";
+
+                    }
+                    count = 1;
+                }
+
+                //snakeLength++;
+                // 
+                // s.style.left = 
+            }
+        }
+    </script>
+</body>
+
+</html>

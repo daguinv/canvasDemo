@@ -1,0 +1,168 @@
+*{
+    padding: 0;
+    margin: 0;
+    text-decoration: none;
+}
+html,body{
+    width: 100%;
+    height: 100%;
+}
+.startGame{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.startGame .startBtn{
+    width: 170px;
+    height: 200px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background: url("img/startGame.png");
+    background-size: 100% 100%;
+    z-index: 500;
+    cursor: pointer;
+    /*display: none;*/
+}
+.game{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background: url("img/back5.jpg");
+    background-size: 100% 100%;
+    z-index: 10;
+}
+.game .gameLeft{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 36%;
+    /*border: 1px solid black; */
+}
+.game .gameLeft .btn{
+    width: 37px;
+    height: 26px;
+    text-align: center;
+    border-radius: 25px;
+    box-shadow: 0 0 20px rgb(97, 132, 150);
+    right: 1px;
+}
+.game .gameLeft .pauseBtn{
+    position: absolute;
+    top: 27.5%;
+}
+.game .gameLeft .addSpeed{
+    position: absolute;
+    top: 32%;
+}
+.game .gameLeft .reduceSpeed{
+    position: absolute;
+    top: 37%;
+}
+.game .gameLeft a{
+    display: block;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+    width: 100%;
+    line-height: 26px;
+    /*border: 1px solid red;*/
+}
+.game .gameMain{
+    position: absolute;
+    left: 36%;
+    top: 0;
+    height: 100%;
+    width: 64%;
+   /*  border: 1px solid red; */
+}
+.game .gameMain .head{
+    width: 100%;
+    height: 31%;
+    /* border: 1px solid black; */
+}
+.game .gameMain .head .topsoreL{
+    display: inline-block;
+    margin-left: 15%;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 900;
+    color: rgb(172, 211, 230);
+}
+.game .gameMain .head .topsoreR{
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 20px;
+    font-weight: 900;
+    color: rgb(172, 211, 230);
+}
+.game .gameMain .content{
+    position: absolute;
+   /* border: 1px solid blue;*/
+    width: 58%;
+    height: 39%;
+}
+.overgame{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.overgame .closePic{
+    background: url("img/startP.jpg");
+    position: absolute;
+    width: 400px;
+    height: 300px;
+    background-size: 100% 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+     display: none; 
+}
+.overgame .close{
+    background: url("img/closeBtn.png");
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-size: 100% 100%;
+    top: 0;
+    right: 0;
+}
+.overgame .sore{
+    position: absolute;
+    display: block;
+    top: 140px;
+    left: 160px;
+    font-size: 20px;
+    font-weight: 900;
+}
+.food{
+    width: 20px;
+    height: 20px;
+    background: url(img/apple.png);
+    background-size: 100% 100%;
+    position: absolute;
+}
+.snakeBody{
+    width: 20px;
+    height: 20px;
+    background: url(img/body.png);
+    background-size: 100% 100%;
+    position: absolute;
+    border-radius: 50%;
+}
+.snakeHead{
+    width: 20px;
+    height: 20px;
+    background: url(img/head.png);
+    background-size: 100% 100%;
+    position: absolute;
+    
+}

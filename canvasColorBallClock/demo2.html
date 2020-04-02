@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        html,body{
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+    <script src="./digit.js"></script>
+    <script>
+        var SCREEN_WIDTH = document.body.clientWidth;
+        var SCREEN_HEIGHT = document.body.clientHeight;
+        var currentTime = null;
+        var MARGIN_LEFT = Math.round(SCREEN_WIDTH / 10);
+        var MARGIN_TOP = Math.round(SCREEN_HEIGHT / 10);
+        var RADIUS = Math.round(SCREEN_WIDTH * 4 / 5 / 108) - 1;
+        var timerArr = [];
+        var balls = [];
+        var t = 0;
+        const colors = ["#33B5E5", "#0099CC", "#AA66CC", "#9933CC", "#99CC00", "#669900", "#FFBB33", "#FF8800", "#FF4444", "#CC0000"]
+
+        window.onload = function () {
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext("2d");
+            canvas.width = SCREEN_WIDTH;
+            canvas.height = SCREEN_HEIGHT;
+            if (canvas.getContext) {
+                var context = canvas.getContext('2d');
+                setInterval(function () {
+                    upData();
+                    rander(context);
+                }, 50);
+            }
+        }
+
+        function upData() {
+            currentTime = new Date();
+
+            var curHours = currentTime.getHours();
+            var curMinutes = currentTime.getMinutes();
+            var curSeconds = currentTime.getSeconds();
+
+            var HoursOne = parseInt(curHours / 10);
+            var HoursTwo = parseInt(curHours % 10);
+            var MinutesOne = parseInt(curMinutes / 10);
+            var MinutesTwo = parseInt(curMinutes % 10);
+            var SecondsOne = parseInt(curSeconds / 10);
+            var SecondsTwo = parseInt(curSeconds % 10);
+
+            if (HoursOne != timerArr[0]) {
+                addBalls(MARGIN_LEFT + 0, MARGIN_TOP, HoursOne);
+            }
+            if (HoursTwo != timerArr[1]) {
+                addBalls(MARGIN_LEFT + 15 * (RADIUS + 1), MARGIN_TOP, HoursTwo);
+            }
+
+            if (MinutesOne != timerArr[2]) {
+                addBalls(MARGIN_LEFT + 39 * (RADIUS + 1), MARGIN_TOP, MinutesOne);
+            }
+            if (MinutesTwo != timerArr[3]) {
+                addBalls(MARGIN_LEFT + 54 * (RADIUS + 1), MARGIN_TOP, MinutesTwo);
+            }
+
+            if (SecondsOne != timerArr[4]) {
+                addBalls(MARGIN_LEFT + 78 * (RADIUS + 1), MARGIN_TOP, SecondsOne);
+            }
+            if (SecondsTwo != timerArr[5]) {
+                addBalls(MARGIN_LEFT + 93 * (RADIUS + 1), MARGIN_TOP, SecondsTwo);
+            }
+            timerArr = [HoursOne, HoursTwo, MinutesOne, MinutesTwo, SecondsOne, SecondsTwo];
+            updataBall();
+
+        }
+        function updataBall() {
+            for (var i = 0; i < balls.length; i++) {
+                balls[i].x = balls[i].x + balls[i].vx;
+                balls[i].vy = balls[i].vy + balls[i].g;
+                balls[i].y = balls[i].y + balls[i].vy;
+                if (balls[i].y + RADIUS > SCREEN_HEIGHT) {
+                    balls[i].y = SCREEN_HEIGHT - RADIUS;
+                    balls[i].vy = - balls[i].vy * 0.8;
+                }
+
+            }
+            var t = 0;
+            for (var i = 0; i < balls.length; i++) {
+                if (balls[i].x + RADIUS > 0 && balls[i].x - RADIUS < SCREEN_WIDTH) {
+                    balls[t++] = balls[i];
+                }
+            }
+            while(balls.length > t){
+                balls.pop();
+            }
+
+        }
+        function addBalls(x, y, number) {
+            for (var i = 0; i < digit[number].length; i++)
+                for (var j = 0; j < digit[number][i].length; j++)
+                    if (digit[number][i][j] == 1) {
+                        var obj = {
+                            x: x + j * 2 * (RADIUS + 1) + (RADIUS + 1),
+                            y: y + i * 2 * (RADIUS + 1) + (RADIUS + 1),
+                            g: 1.5 + Math.random(),
+                            vx: Math.pow(-1, Math.ceil(Math.random() * 100)) * 4,
+                            vy: -5,
+                            color: colors[Math.floor(Math.random() * colors.length)]
+                        }
+                        balls.push(obj);
+                    }
+        }
+
+        function rander(context) {
+            context.clearRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+            var hours = currentTime.getHours();
+            var minutes = currentTime.getMinutes();
+            var seconds = currentTime.getSeconds();
+            renderDigit(MARGIN_LEFT, MARGIN_TOP, parseInt(hours / 10), context)
+            renderDigit(MARGIN_LEFT + 15 * (RADIUS + 1), MARGIN_TOP, parseInt(hours % 10), context)
+            renderDigit(MARGIN_LEFT + 30 * (RADIUS + 1), MARGIN_TOP, 10, context)
+            renderDigit(MARGIN_LEFT + 39 * (RADIUS + 1), MARGIN_TOP, parseInt(minutes / 10), context);
+            renderDigit(MARGIN_LEFT + 54 * (RADIUS + 1), MARGIN_TOP, parseInt(minutes % 10), context);
+            renderDigit(MARGIN_LEFT + 69 * (RADIUS + 1), MARGIN_TOP, 10, context);
+            renderDigit(MARGIN_LEFT + 78 * (RADIUS + 1), MARGIN_TOP, parseInt(seconds / 10), context);
+            renderDigit(MARGIN_LEFT + 93 * (RADIUS + 1), MARGIN_TOP, parseInt(seconds % 10), context);
+            randerBall(context);
+        }
+        function randerBall(context) {
+            for (var i = 0; i < balls.length; i++) {
+                context.fillStyle = balls[i].color;
+                context.beginPath();
+                context.arc(balls[i].x, balls[i].y, RADIUS, 0, Math.PI * 2, 0);
+                context.closePath();
+                context.fill();
+
+            }
+        }
+        function renderDigit(x, y, number, context) {
+            context.fillStyle = 'rgb(0,102,153)';
+            for (var i = 0; i < digit[number].length; i++)
+                for (var j = 0; j < digit[number][i].length; j++)
+                    if (digit[number][i][j] == 1) {
+                        context.beginPath();
+                        context.arc(x + j * 2 * (RADIUS + 1) + (RADIUS + 1), y + i * 2 * (RADIUS + 1) + (RADIUS + 1), RADIUS, 0, 2 * Math.PI)
+                        context.closePath();
+                        context.fill()
+                    }
+
+        }
+    </script>
+</body>
+
+</html>
